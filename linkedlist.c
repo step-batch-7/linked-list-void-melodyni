@@ -41,6 +41,26 @@ Status add_to_start(List_ptr list, Element value){
   return Success;
 }
 
+int search(List_ptr list, Element value, Matcher matcher){
+  Node_ptr p_walk = list->first;
+  int index = 0;
+  while(p_walk != NULL){
+    if((* matcher)(p_walk->element,value)){
+      return index;
+    }
+    index++;
+    p_walk = p_walk->next;
+  }
+  return -1;
+}
+
+Status add_unique(List_ptr list, Element value, Matcher matcher){
+  Status status = search(list,value,matcher);
+  if(status == -1){
+    return add_to_list(list,value);
+  }
+  return Failure;
+}
 
 Element remove_from_start(List_ptr list){
   if(list->first == NULL){

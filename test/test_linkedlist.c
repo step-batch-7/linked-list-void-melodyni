@@ -70,6 +70,35 @@ void test_add_to_list(){
   destroy_list(list2);
 }
 
+Status match_int(Element value_a, Element value_b){
+  int num_a = *(int *)value_a;
+  int num_b = *(int *)value_b;
+  return num_a == num_b;
+}
+
+void test_add_unique(){
+  printf("\nadd unique\n");
+  char message[] = "should add given value if it does not exist in list";
+  List_ptr list = create_list();
+  int num = 2;
+  int num2 = 3;
+  add_to_list(list,&num);
+  Status status = add_unique(list, &num2, &match_int);
+  Status is_passed = status && (*(int *)(list->last->element) == 3) && (list->length == 2);
+  print_result(is_passed,message);
+  destroy_list(list);
+
+  char message2[] = "should not add given value if it exists in list";
+  List_ptr list2 = create_list();
+  int num3 = 2;
+  int num4 = 2;
+  add_to_list(list2,&num3);
+  Status status2 = add_unique(list2, &num4, &match_int);
+  Status is_passed2 = !status2 && (list2->length == 1);
+  print_result(is_passed2,message2);
+  destroy_list(list2);
+}
+
 void test_remove_from_start(){
   printf("\nremove_from_start\n");
   char message[] = "should remove and give the first element from given list";
@@ -96,7 +125,6 @@ void test_remove_from_end(){
   Status status = (*(int *)value == 3) && (list->length == 1);
   print_result(status,message);
   destroy_list(list);
-
 }
 
 void test_clear_list(){
@@ -109,14 +137,16 @@ void test_clear_list(){
   add_to_list(list,&num2);
   Status status = clear_list(list);
   Status is_passed = list != NULL && list->first == NULL &&  list->last == NULL && list->length == 0;
-  print_result(status,message);
+  print_result(is_passed,message);
   destroy_list(list);
+
 }
 
 int main(){
   test_create_list();
   test_add_to_list();
   test_add_to_start();
+  test_add_unique();
   test_remove_from_start();
   test_remove_from_end();
   test_clear_list();
