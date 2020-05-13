@@ -32,6 +32,25 @@ void test_create_list(){
   destroy_list(list);
 }
 
+void test_add_to_start(){
+  printf("\nadd_to_start\n");
+  char message[] = "should add integer in the beginning of list";
+  List_ptr list = create_list();
+  int num = 2;
+  Status status = add_to_start(list,&num);
+  Status is_passed = status && (*(int *)(list->first->element) == 2) && (list->length == 1);
+  print_result(status,message);
+  destroy_list(list);
+
+  char message2[] = "should add character at the beginning of list";
+  List_ptr list2 = create_list();
+  char letter = 'R';
+  Status status2 = add_to_start(list2,&letter);
+  Status is_passed2 = status2 && (*(char *)(list2->first->element) == 'R') && (list2->length == 1);
+  print_result(status2,message2);
+  destroy_list(list2);
+}
+
 void test_add_to_list(){
   printf("\nadd_to_list\n");
   char message[] = "should add integer at the end of list";
@@ -77,6 +96,7 @@ void test_remove_from_end(){
   Status status = (*(int *)value == 3) && (list->length == 1);
   print_result(status,message);
   destroy_list(list);
+
 }
 
 void test_clear_list(){
@@ -96,6 +116,7 @@ void test_clear_list(){
 int main(){
   test_create_list();
   test_add_to_list();
+  test_add_to_start();
   test_remove_from_start();
   test_remove_from_end();
   test_clear_list();
