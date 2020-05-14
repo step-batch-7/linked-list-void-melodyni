@@ -70,6 +70,35 @@ void test_add_to_list(){
   destroy_list(list2);
 }
 
+void test_insert_at(){
+  printf("\ninsert_at\n");
+  char message[] = "should insert the given value at the begining of list";
+  List_ptr list = create_list();
+  int num = 2;
+  int num2 = 99;
+  add_to_list(list,&num);
+  Status status = insert_at(list,&num2,0);
+  Status is_passed = status && (*(int *)(list->first->element) == 99) && (list->length == 2);
+  print_result(status,message);
+  destroy_list(list);
+
+  char message2[] = "should insert the given value at given position in list";
+  List_ptr list2 = create_list();
+  char char1 = 'R';
+  char char2 = 'A';
+  char char3 = 'I';
+  char char4 = 'G';
+  add_to_list(list2, &char1);
+  add_to_list(list2, &char2);
+  add_to_list(list2, &char3);
+  Status status2 = insert_at(list, &char4, 2);
+  Prev_Current_Pair *pair = get_prev_curr_pair(list2,2);
+  Status is_passed2 = status2 && (*(char *)(pair->current->element) == 'G') && (list2->length == 4);
+  print_result(status2,message2);
+  destroy_list(list2);
+
+}
+
 Status match_int(Element value_a, Element value_b){
   int num_a = *(int *)value_a;
   int num_b = *(int *)value_b;
@@ -139,13 +168,13 @@ void test_clear_list(){
   Status is_passed = list != NULL && list->first == NULL &&  list->last == NULL && list->length == 0;
   print_result(is_passed,message);
   destroy_list(list);
-
 }
 
 int main(){
   test_create_list();
   test_add_to_list();
   test_add_to_start();
+  test_insert_at();
   test_add_unique();
   test_remove_from_start();
   test_remove_from_end();

@@ -55,6 +55,23 @@ Prev_Current_Pair *get_prev_curr_pair(List_ptr list, int position){
   return pair;
 }
 
+Status insert_at(List_ptr list, Element value, int position){
+  if(position < 0){
+    return Failure;
+  }
+  if(position == 0){
+    return add_to_start(list,value);
+  }
+  if(position == list->length){
+    return add_to_list(list,value);
+  }
+  Node_ptr new_node = create_node(value);
+  Prev_Current_Pair *pair = get_prev_curr_pair(list,position);
+  new_node->next = pair->current;
+  pair->prev->next = new_node;
+  list->length++;
+  return Success;
+}
 int search(List_ptr list, Element value, Matcher matcher){
   Node_ptr p_walk = list->first;
   int index = 0;
