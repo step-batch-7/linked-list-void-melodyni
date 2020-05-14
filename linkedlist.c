@@ -70,8 +70,10 @@ Status insert_at(List_ptr list, Element value, int position){
   new_node->next = pair->current;
   pair->prev->next = new_node;
   list->length++;
+  free(pair);
   return Success;
 }
+
 int search(List_ptr list, Element value, Matcher matcher){
   Node_ptr p_walk = list->first;
   int index = 0;
@@ -97,6 +99,9 @@ Element remove_from_start(List_ptr list){
   if(list->first == NULL){
     return NULL;
   }
+  if(list->length == 1){
+    list->last = NULL;
+  }
   Node_ptr node_to_remove = list->first;
   list->first = list->first->next;
   Element value = node_to_remove->element;
@@ -118,6 +123,7 @@ Element remove_from_end(List_ptr list){
   free(pair->current);
   pair->prev->next = NULL;
   list->length--;
+  free(pair);
   return value;
 }
 

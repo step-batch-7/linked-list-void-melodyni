@@ -136,9 +136,25 @@ void test_remove_from_start(){
   add_to_list(list,&num);
   add_to_list(list,&num2);
   Element value = remove_from_start(list);
-  Status status = (*(int *)value == 2) && (list->length == 1);
+  Status status = (*(int *)value == 2) && (list->length == 1) && *(int *)list->first->element == 3;
   print_result(status,message);
   destroy_list(list);
+
+  char message2[] = "should remove the element from list if list has only one element";
+  List_ptr list2 = create_list();
+  int num3 = 2;
+  add_to_list(list2,&num3);
+  Element value2 = remove_from_start(list2);
+  Status status2 = (*(int *)value2 == 2) && (list2->length == 0) && list2->first == NULL;
+  print_result(status2,message2);
+  destroy_list(list2);
+
+  char message3[] = "should not remove if list is empty";
+  List_ptr list3 = create_list();
+  Element value3 = remove_from_start(list3);
+  Status status3 = value3 == NULL && (list3->length == 0) && list3->first == NULL;
+  print_result(status3,message3);
+  destroy_list(list3);
 }
 
 void test_remove_from_end(){
@@ -157,7 +173,6 @@ void test_remove_from_end(){
   Status status = (*(int *)value == 5) && (list->length == 3) && *(int *)(list->last->element) == 4;
   print_result(status,message);
   destroy_list(list);
-  
 }
 
 void test_clear_list(){
