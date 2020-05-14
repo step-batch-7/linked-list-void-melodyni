@@ -259,6 +259,49 @@ void test_remove_at(){
   destroy_list(list4);
 }
 
+void test_remove_first_occurrence(){
+  printf("\nremove_first_occurrence\n");
+  char message[] = "should remove first occurrence of given value ";
+  List_ptr list = create_list();
+  int num = 2;
+  int num2 = 3;
+  int num3 = 3;
+  add_to_list(list,&num);
+  add_to_list(list,&num2);
+  add_to_list(list,&num3);
+  Element value = remove_first_occurrence(list, &num2 ,&match_int);
+  Status is_passed = *(int *)value == 3 && (list->length == 2);
+  print_result(is_passed, message);
+  destroy_list(list);
+
+  char message2[] = "should not remove if value does not exist in list ";
+  List_ptr list2 = create_list();
+  int num4 = 2;
+  int num5 = 99;
+  add_to_list(list2,&num4);
+  Element value2 = remove_first_occurrence(list2, &num5, &match_int);
+  Status is_passed2 = value2 == NULL && (list2->length == 1);
+  print_result(is_passed2, message2);
+  destroy_list(list2);
+
+  char message3[] = "should not remove if list is empty";
+  List_ptr list3 = create_list();
+  int num6 = 99;
+  Element value3 = remove_first_occurrence(list3, &num6 , &match_int);
+  Status is_passed3 = value3 == NULL && (list3->length == 0);
+  print_result(is_passed3, message3);
+  destroy_list(list3);
+
+  char message4[] = "should remove first occurrence in list having given value only";
+  List_ptr list4 = create_list();
+  int num7 = 2;
+  int num8 = 2;
+  add_to_list(list4,&num7);
+  Element value4 = remove_first_occurrence(list4, &num8, &match_int);
+  Status is_passed4 = *(int *)value4 == 2 && (list4->length == 0);
+  print_result(is_passed4, message4);
+  destroy_list(list4);
+}
 
 void test_clear_list(){
   printf("\nclear_list\n");
@@ -283,6 +326,7 @@ int main(){
   test_add_unique();
   test_remove_from_start();
   test_remove_from_end();
+  test_remove_first_occurrence();
   test_clear_list();
   return 0;
 }

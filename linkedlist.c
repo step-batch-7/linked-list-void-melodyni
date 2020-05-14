@@ -147,6 +147,10 @@ Element remove_at(List_ptr list, int position){
   return value;
 }
 
+Element remove_first_occurrence(List_ptr list, Element value, Matcher matcher){
+  int position = search(list, value, matcher);
+  return remove_at(list,position);
+}
 
 Status clear_list(List_ptr list){
   Status status = Success;
