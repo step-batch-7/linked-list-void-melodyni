@@ -205,3 +205,17 @@ List_ptr map(List_ptr list, Mapper mapper){
   }
   return mapped_array;
 }
+
+List_ptr filter(List_ptr list, Predicate predicate){
+  Node_ptr p_walk = list->first; 
+  List_ptr filtered_array = create_list();
+  while (p_walk != NULL)
+  {
+    Status status = (*predicate)(p_walk->element);
+    if(status){
+      add_to_list(filtered_array, p_walk->element);
+    }
+    p_walk = p_walk->next;
+  }
+  return filtered_array;
+}

@@ -408,6 +408,49 @@ void test_map(){
   destroy_list(expected2);
 }
 
+Status is_odd(Element value){
+  if(*(int *)value % 2 != 0){
+    return Success;
+  }
+  return Failure;
+}
+
+
+void test_filter(){
+  printf("\nfilter\n");
+  List_ptr list = create_list();
+  int num = 2;
+  int num2 = 3;
+  int num3 = 4;
+  int num4 = 7;
+  add_to_list(list,&num);
+  add_to_list(list,&num2);
+  add_to_list(list,&num3);
+  add_to_list(list,&num4);
+
+  List_ptr expected = create_list();
+  int num5 = 3;
+  int num6 = 7;
+  add_to_list(expected,&num5);
+  add_to_list(expected,&num6);
+
+  List_ptr actual = filter(list,&is_odd);
+  char message[] = "should filter odd numbers from list";
+  print_result(compare(actual,expected,&are_int_equal),message);
+  destroy_list(list);
+  destroy_list(actual);
+  destroy_list(expected);
+
+  List_ptr list2 = create_list();
+  List_ptr expected2 = create_list();
+  List_ptr actual2 = filter(list2, &is_odd);
+  char message2[] = "should filter empty array";
+  print_result(compare(actual2,expected2,&are_int_equal),message2);
+  destroy_list(list2);
+  destroy_list(actual2);
+  destroy_list(expected2);
+}
+
 int main(){
   test_create_list();
   test_add_to_list();
@@ -421,5 +464,6 @@ int main(){
   test_remove_all_occurrences();
   test_clear_list();
   test_map();
+  test_filter();
   return 0;
 }
