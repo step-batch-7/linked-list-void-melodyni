@@ -209,8 +209,7 @@ List_ptr map(List_ptr list, Mapper mapper){
 List_ptr filter(List_ptr list, Predicate predicate){
   Node_ptr p_walk = list->first; 
   List_ptr filtered_array = create_list();
-  while (p_walk != NULL)
-  {
+  while (p_walk != NULL){
     Status status = (*predicate)(p_walk->element);
     if(status){
       add_to_list(filtered_array, p_walk->element);
@@ -218,4 +217,13 @@ List_ptr filter(List_ptr list, Predicate predicate){
     p_walk = p_walk->next;
   }
   return filtered_array;
+}
+
+Element reduce(List_ptr list, Element result, Reducer reducer){
+  Node_ptr p_walk = list->first; 
+  while(p_walk != NULL){
+    result = (*reducer )(p_walk->element,result);
+    p_walk = p_walk->next;
+  }
+  return result;
 }

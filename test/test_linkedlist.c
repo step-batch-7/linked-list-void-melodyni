@@ -451,6 +451,40 @@ void test_filter(){
   destroy_list(expected2);
 }
 
+Element add(Element data_a, Element data_b){
+  Element sum_ptr = malloc(sizeof(Element));
+  int num_a = *(int *)data_a;
+  int num_b = *(int *)data_b;
+  int sum = num_a + num_b;
+  memcpy(sum_ptr, &sum , sizeof(char));
+  return sum_ptr;
+}
+
+void test_reduce(){
+  printf("\nreduce\n");
+  List_ptr list = create_list();
+  int num = 1;
+  int num2 = 2;
+  int num3 = 3;
+  int num4 = 4;
+  add_to_list(list,&num);
+  add_to_list(list,&num2);
+  add_to_list(list,&num3);
+  add_to_list(list,&num4);
+  int context = 90;
+  Element result = reduce(list, &context, &add);
+  char message[] = "should add all element of list with given context";
+  print_result(*(int *)result == 100 ,message);
+  destroy_list(list);
+
+  List_ptr list2 = create_list();
+  int context2 = 50;
+  Element result2 = reduce(list2, &context2, &add);
+  char message2[] = "should return context if list is empty";
+  print_result(*(int *)result2 == 50 ,message2);
+  destroy_list(list2);
+}
+
 int main(){
   test_create_list();
   test_add_to_list();
@@ -465,5 +499,6 @@ int main(){
   test_clear_list();
   test_map();
   test_filter();
+  test_reduce();
   return 0;
 }
