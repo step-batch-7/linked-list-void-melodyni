@@ -41,6 +41,20 @@ Status add_to_start(List_ptr list, Element value){
   return Success;
 }
 
+Prev_Current_Pair *get_prev_curr_pair(List_ptr list, int position){
+  Prev_Current_Pair *pair = malloc(sizeof(Prev_Current_Pair));
+  Node_ptr p_walk = list->first;
+  while(position > 1){
+    if(p_walk != NULL){
+      p_walk = p_walk->next;
+      position--;
+    }
+  }
+  pair->prev = p_walk;
+  pair->current = p_walk->next;
+  return pair;
+}
+
 int search(List_ptr list, Element value, Matcher matcher){
   Node_ptr p_walk = list->first;
   int index = 0;
@@ -81,14 +95,10 @@ Element remove_from_end(List_ptr list){
   if(list->length == 1){
     return remove_from_start(list);
   }
-  Node_ptr p_walk = list->first;
-  while(p_walk->next->next != NULL){
-    p_walk = p_walk->next;
-  }
-  list->last = p_walk;
-  Element value = p_walk->next->element;
-  free(p_walk->next);
-  p_walk->next = NULL;
+  Prev_Current_Pair *pair = get_prev_curr_pair(list,list->length-1);
+  Element value = pair->current->element;
+  free(pair->current);
+  pair->prev->next = NULL;
   list->length--;
   return value;
  }
