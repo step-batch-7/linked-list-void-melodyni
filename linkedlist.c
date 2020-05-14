@@ -114,11 +114,12 @@ Element remove_from_end(List_ptr list){
   }
   Prev_Current_Pair *pair = get_prev_curr_pair(list,list->length-1);
   Element value = pair->current->element;
+  list->last = pair->prev;
   free(pair->current);
   pair->prev->next = NULL;
   list->length--;
   return value;
- }
+}
 
 Status clear_list(List_ptr list){
   Status status = Success;

@@ -96,7 +96,6 @@ void test_insert_at(){
   Status is_passed2 = status2 && (*(char *)(pair->current->element) == 'G') && (list2->length == 4);
   print_result(status2,message2);
   destroy_list(list2);
-
 }
 
 Status match_int(Element value_a, Element value_b){
@@ -148,12 +147,17 @@ void test_remove_from_end(){
   List_ptr list = create_list();
   int num = 2;
   int num2 = 3;
+  int num3 = 4;
+  int num4 = 5;
   add_to_list(list,&num);
   add_to_list(list,&num2);
+  add_to_list(list,&num3);
+  add_to_list(list,&num4);
   Element value = remove_from_end(list);
-  Status status = (*(int *)value == 3) && (list->length == 1);
+  Status status = (*(int *)value == 5) && (list->length == 3) && *(int *)(list->last->element) == 4;
   print_result(status,message);
   destroy_list(list);
+  
 }
 
 void test_clear_list(){
