@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h> 
 
 /*
 The consumer of this Linked List library is expected to take care of allocating & freeing elements.
@@ -9,7 +10,6 @@ The Linked List maintains the element references in a sequence and provides conv
 
 #ifndef __LINKEDLIST_H_
 #define __LINKEDLIST_H_
-
 
 typedef enum
 {

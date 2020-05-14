@@ -485,6 +485,42 @@ void test_reduce(){
   destroy_list(list2);
 }
 
+void convert_to_lower(Element value){
+  *(char *)value =  tolower(*(char *)value);
+}
+
+Status match_char(Element value_a, Element value_b){
+  char num_a = *(char *)value_a;
+  char num_b = *(char *)value_b;
+  return num_a == num_b;
+}
+
+void test_forEach(){
+  printf("\nforEach\n");
+  List_ptr list = create_list();
+  char char1 = 'r';
+  char char2 = 'a';
+  char char3 = 'g';
+  char char4 = 'i';
+  add_to_list(list,&char1);
+  add_to_list(list,&char2);
+  add_to_list(list,&char3);
+  add_to_list(list,&char4);
+
+  List_ptr expected = create_list();
+  char char5 = 'R';
+  char char6 = 'A';
+  char char7 = 'G';
+  char char8 = 'I';
+  add_to_list(expected,&char1);
+  add_to_list(expected,&char2);
+  add_to_list(expected,&char3);
+  add_to_list(expected,&char4);
+
+  char message[] = "should convert all element to upper case";
+  print_result(compare(expected,list,&match_char),message);
+}
+
 int main(){
   test_create_list();
   test_add_to_list();
@@ -500,5 +536,6 @@ int main(){
   test_map();
   test_filter();
   test_reduce();
+  test_forEach();
   return 0;
 }
