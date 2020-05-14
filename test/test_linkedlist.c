@@ -303,6 +303,51 @@ void test_remove_first_occurrence(){
   destroy_list(list4);
 }
 
+
+void test_remove_all_occurrences(){
+  printf("\nremove_all_occurrences\n");
+  char message[] = "should remove all occurrences of given value ";
+  List_ptr list = create_list();
+  int num = 2;
+  int num2 = 3;
+  int num3 = 3;
+  add_to_list(list,&num);
+  add_to_list(list,&num2);
+  add_to_list(list,&num3);
+  List_ptr result_list = remove_all_occurrences(list, &num2 ,&match_int);
+  Status is_passed = list->length == 1 && search(result_list, &num2, &match_int) == -1;
+  print_result(is_passed, message);
+  destroy_list(list);
+
+  char message2[] = "should not remove if value does not exist in list ";
+  List_ptr list2 = create_list();
+  int num4 = 2;
+  int num5 = 99;
+  add_to_list(list2,&num4);
+  List_ptr result_list2 = remove_all_occurrences(list2, &num5, &match_int);
+  Status is_passed2 = (list2->length == 1) && search(result_list2, &num5, &match_int) == -1;
+  print_result(is_passed2, message2);
+  destroy_list(list2);
+
+  char message3[] = "should not remove if list is empty";
+  List_ptr list3 = create_list();
+  int num6 = 99;
+  List_ptr result_list3 = remove_all_occurrences(list3, &num6 , &match_int);
+  Status is_passed3 = list3->length == 0 && search(result_list3, &num6, &match_int) == -1;
+  print_result(is_passed3, message3);
+  destroy_list(list3);
+
+  char message4[] = "should remove the value from list having given value only";
+  List_ptr list4 = create_list();
+  int num7 = 2;
+  int num8 = 2;
+  add_to_list(list4,&num7);
+  List_ptr result_list4 = remove_all_occurrences(list4, &num8, &match_int);
+  Status is_passed4 = list4->length == 0 && search(result_list4, &num8, &match_int) == -1;
+  print_result(is_passed4, message4);
+  destroy_list(list4);
+}
+
 void test_clear_list(){
   printf("\nclear_list\n");
   char message[] = "should empty the given list";
@@ -327,6 +372,7 @@ int main(){
   test_remove_from_start();
   test_remove_from_end();
   test_remove_first_occurrence();
+  test_remove_all_occurrences();
   test_clear_list();
   return 0;
 }

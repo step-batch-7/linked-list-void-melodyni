@@ -54,6 +54,7 @@ Status insert_at(List_ptr, Element element, int position);
 
 List_ptr reverse(List_ptr);
 Prev_Current_Pair *get_prev_curr_pair(List_ptr, int);
+int search(List_ptr , Element element, Matcher matcher);
 
 
 List_ptr map(List_ptr, Mapper);

@@ -152,6 +152,15 @@ Element remove_first_occurrence(List_ptr list, Element value, Matcher matcher){
   return remove_at(list,position);
 }
 
+List_ptr remove_all_occurrences(List_ptr list, Element value, Matcher matcher ){
+  int position = search(list, value, matcher);
+  while(position != -1){
+    remove_at(list,position);
+    position = search(list, value, matcher);
+  }
+  return list;
+}
+
 Status clear_list(List_ptr list){
   Status status = Success;
   Element value;
