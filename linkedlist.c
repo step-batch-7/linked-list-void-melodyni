@@ -74,8 +74,6 @@ Status insert_at(List_ptr list, Element value, int position){
   return Success;
 }
 
-
-
 int search(List_ptr list, Element value, Matcher matcher){
   Node_ptr p_walk = list->first;
   int index = 0;
@@ -90,8 +88,8 @@ int search(List_ptr list, Element value, Matcher matcher){
 }
 
 Status add_unique(List_ptr list, Element value, Matcher matcher){
-  Status status = search(list,value,matcher);
-  if(status == -1){
+  int index = search(list,value,matcher);
+  if(index == -1){
     return add_to_list(list,value);
   }
   return Failure;
@@ -128,6 +126,27 @@ Element remove_from_end(List_ptr list){
   free(pair);
   return value;
 }
+
+Element remove_at(List_ptr list, int position){
+  if(position < 0 || position >= list->length){
+    return NULL;
+  }
+  if(position == 0){
+    return remove_from_start(list);
+  }
+  if(position == list->length-1){
+    return remove_from_end(list);
+  }
+  Prev_Current_Pair *pair = get_prev_curr_pair(list,position);
+  Node_ptr node_to_remove = pair->current;
+  Element value = pair->current->element;
+  pair->prev->next = pair->current->next;
+  free(node_to_remove);
+  free(pair);
+  list->length--;
+  return value;
+}
+
 
 Status clear_list(List_ptr list){
   Status status = Success;

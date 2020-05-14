@@ -211,6 +211,55 @@ void test_remove_from_end(){
   destroy_list(list3);
 }
 
+void test_remove_at(){
+  printf("\nremove_at\n");
+  char message[] = "should remove from the begining of list";
+  List_ptr list = create_list();
+  int num = 2;
+  add_to_list(list,&num);
+  Element value = remove_at(list,0);
+  Status is_passed = *(int *)value == 2 && list->first == NULL && (list->length == 0);
+  print_result(is_passed,message);
+  destroy_list(list);
+
+  char message2[] = "should remove from given position in list";
+  List_ptr list2 = create_list();
+  char char1 = 'R';
+  char char2 = 'A';
+  char char3 = 'G';
+  char char4 = 'I';
+  add_to_list(list2, &char1);
+  add_to_list(list2, &char2);
+  add_to_list(list2, &char3);
+  add_to_list(list2, &char4);
+  Element value2 = remove_at(list2, 2);
+  Prev_Current_Pair *pair = get_prev_curr_pair(list2,2);
+  Status is_passed2 = *(char *)value2 == 'G' && (*(char *)(pair->current->element) == 'I') && (list2->length == 3);
+  print_result(is_passed2,message2);
+  destroy_list(list2);
+
+  char message3[] = "should not remove from list if position is invalid";
+  List_ptr list3 = create_list();
+  int num2 = 2;
+  add_to_list(list3,&num2);
+  Element value3 = remove_at(list3,5);
+  Status is_passed3 =  value3 == NULL && (list3->length == 1);
+  print_result(is_passed3,message3);
+  destroy_list(list3);
+
+  char message4[] = "should remove from the end of list ";
+  List_ptr list4 = create_list();
+  int num5 = 2;
+  int num6 = 99;
+  add_to_list(list4,&num5);
+  add_to_list(list4,&num6);
+  Element value4 = remove_at(list4,1);
+  Status is_passed4 = *(int *)value4 == 99 && (list4->length == 1) && (*(int *)(list->last->element) == 2);
+  print_result(is_passed4,message4);
+  destroy_list(list4);
+}
+
+
 void test_clear_list(){
   printf("\nclear_list\n");
   char message[] = "should empty the given list";
@@ -230,6 +279,7 @@ int main(){
   test_add_to_list();
   test_add_to_start();
   test_insert_at();
+  test_remove_at();
   test_add_unique();
   test_remove_from_start();
   test_remove_from_end();
