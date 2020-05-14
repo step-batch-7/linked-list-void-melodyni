@@ -91,11 +91,31 @@ void test_insert_at(){
   add_to_list(list2, &char1);
   add_to_list(list2, &char2);
   add_to_list(list2, &char3);
-  Status status2 = insert_at(list, &char4, 2);
+  Status status2 = insert_at(list2, &char4, 2);
   Prev_Current_Pair *pair = get_prev_curr_pair(list2,2);
   Status is_passed2 = status2 && (*(char *)(pair->current->element) == 'G') && (list2->length == 4);
   print_result(status2,message2);
   destroy_list(list2);
+
+  char message3[] = "should not insert in list if position is invalid";
+  List_ptr list3 = create_list();
+  int num3 = 2;
+  int num4 = 99;
+  add_to_list(list3,&num3);
+  Status status3 = insert_at(list3,&num4,5);
+  Status is_passed3 = !status3 && (list3->length == 1);
+  print_result(is_passed3,message3);
+  destroy_list(list3);
+
+  char message4[] = "should insert at the end of list ";
+  List_ptr list4 = create_list();
+  int num5 = 2;
+  int num6 = 99;
+  add_to_list(list4,&num4);
+  Status status4 = insert_at(list4,&num6,1);
+  Status is_passed4 = status4 && (list4->length == 2) && (*(int *)(list->last->element) == 99);
+  print_result(is_passed4,message4);
+  destroy_list(list4);
 }
 
 Status match_int(Element value_a, Element value_b){
@@ -173,6 +193,22 @@ void test_remove_from_end(){
   Status status = (*(int *)value == 5) && (list->length == 3) && *(int *)(list->last->element) == 4;
   print_result(status,message);
   destroy_list(list);
+
+  char message2[] = "should not remove if list is empty";
+  List_ptr list2 = create_list();
+  Element value2 = remove_from_end(list2);
+  Status status2 = value2 == NULL && (list2->length == 0) && list2->last == NULL && list2->first == NULL;
+  print_result(status2,message2);
+  destroy_list(list2);
+
+  char message3[] = "should not remove if list is empty";
+  List_ptr list3 = create_list();
+  int num5 = 99;
+  add_to_list(list3,&num5);
+  Element value3 = remove_from_end(list3);
+  Status status3 = (*(int *)value3 == 99) && (list3->length == 0) && list3->last == NULL && list3->first == NULL;
+  print_result(status3,message3);
+  destroy_list(list3);
 }
 
 void test_clear_list(){

@@ -56,7 +56,7 @@ Prev_Current_Pair *get_prev_curr_pair(List_ptr list, int position){
 }
 
 Status insert_at(List_ptr list, Element value, int position){
-  if(position < 0){
+  if((position < 0 )|| (position > list->length)){
     return Failure;
   }
   if(position == 0){
@@ -73,6 +73,8 @@ Status insert_at(List_ptr list, Element value, int position){
   free(pair);
   return Success;
 }
+
+
 
 int search(List_ptr list, Element value, Matcher matcher){
   Node_ptr p_walk = list->first;
