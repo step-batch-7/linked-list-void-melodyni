@@ -313,35 +313,48 @@ void test_remove_all_occurrences(){
   add_to_list(list,&num);
   add_to_list(list,&num2);
   add_to_list(list,&num3);
-  List_ptr result_list = remove_all_occurrences(list, &num2 ,&match_int);
-  Status is_passed = list->length == 1 && search(result_list, &num2, &match_int) == -1;
+
+  List_ptr expected = create_list();
+  int num4 = 3;
+  int num5 = 3;
+  add_to_list(expected,&num4);
+  add_to_list(expected,&num5);
+
+  List_ptr actual = remove_all_occurrences(list, &num2 ,&match_int);
+  Status is_passed = list->length == 1 && compare(actual,expected,&match_int);
   print_result(is_passed, message);
   destroy_list(list);
 
   char message2[] = "should not remove if value does not exist in list ";
   List_ptr list2 = create_list();
-  int num4 = 2;
-  int num5 = 99;
+  int num6 = 2;
+  int num7 = 99;
   add_to_list(list2,&num4);
-  List_ptr result_list2 = remove_all_occurrences(list2, &num5, &match_int);
-  Status is_passed2 = (list2->length == 1) && search(result_list2, &num5, &match_int) == -1;
+  List_ptr result_list2 = remove_all_occurrences(list2, &num6, &match_int);
+  Status is_passed2 = (list2->length == 1) && search(result_list2, &num7, &match_int) == -1;
   print_result(is_passed2, message2);
   destroy_list(list2);
 
   char message3[] = "should not remove if list is empty";
   List_ptr list3 = create_list();
-  int num6 = 99;
-  List_ptr result_list3 = remove_all_occurrences(list3, &num6 , &match_int);
-  Status is_passed3 = list3->length == 0 && search(result_list3, &num6, &match_int) == -1;
+  int num8 = 99;
+  List_ptr result_list3 = remove_all_occurrences(list3, &num8 , &match_int);
+  Status is_passed3 = list3->length == 0 && search(result_list3, &num8, &match_int) == -1;
   print_result(is_passed3, message3);
   destroy_list(list3);
 
   char message4[] = "should remove the value from list having given value only";
   List_ptr list4 = create_list();
-  int num7 = 2;
-  int num8 = 2;
-  List_ptr result_list4 = remove_all_occurrences(list4, &num8, &match_int);
-  Status is_passed4 = list4->length == 0 && search(result_list4, &num8, &match_int) == -1;
+  int num9 = 2;
+  int num10 = 2;
+  add_to_list(list4,&num9);
+
+  int num11 = 2;
+  List_ptr expected4 = create_list();
+  add_to_list(expected4,&num11);
+
+  List_ptr actual4 = remove_all_occurrences(list4, &num10, &match_int);
+  Status is_passed4 = list4->length == 0 && compare(actual4, expected4, &match_int);
   print_result(is_passed4, message4);
   destroy_list(list4);
 }

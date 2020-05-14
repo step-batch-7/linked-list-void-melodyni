@@ -153,12 +153,13 @@ Element remove_first_occurrence(List_ptr list, Element value, Matcher matcher){
 }
 
 List_ptr remove_all_occurrences(List_ptr list, Element value, Matcher matcher ){
+  List_ptr removed = create_list();
   int position = search(list, value, matcher);
   while(position != -1){
-    remove_at(list,position);
+    add_to_list(removed,remove_at(list,position));
     position = search(list, value, matcher);
   }
-  return list;
+  return removed;
 }
 
 Status clear_list(List_ptr list){
