@@ -235,3 +235,13 @@ void forEach(List_ptr list, ElementProcessor processor){
     p_walk = p_walk->next;
   }
 }
+
+List_ptr reverse(List_ptr list){
+  List_ptr reverse_list = create_list();
+  Node_ptr p_walk = list->first;
+  while(p_walk != NULL){
+    add_to_start(reverse_list,p_walk->element);
+    p_walk = p_walk->next;
+  }
+  return reverse_list;
+}

@@ -519,6 +519,37 @@ void test_forEach(){
 
   char message[] = "should convert all element to upper case";
   print_result(compare(expected,list,&match_char),message);
+  destroy_list(list);
+  destroy_list(expected);
+}
+
+void test_reverse(){
+  printf("\nreverse\n");
+  char message[] = "should reverse the given list";
+  List_ptr list = create_list();
+  int num = 1;
+  int num2 = 2;
+  int num3 = 3;
+  int num4 = 4;
+  add_to_list(list,&num);
+  add_to_list(list,&num2);
+  add_to_list(list,&num3);
+  add_to_list(list,&num4);
+
+  List_ptr expected = create_list();
+  int num5 = 4;
+  int num6 = 3;
+  int num7 = 2;
+  int num8 = 1;
+  add_to_list(expected,&num5);
+  add_to_list(expected,&num6);
+  add_to_list(expected,&num7);
+  add_to_list(expected,&num8);
+  List_ptr actual = reverse(list);
+  print_result(compare(expected,actual,match_int),message);
+  destroy_list(list);
+  destroy_list(expected);
+  destroy_list(actual);
 }
 
 int main(){
@@ -537,5 +568,6 @@ int main(){
   test_filter();
   test_reduce();
   test_forEach();
+  test_reverse();
   return 0;
 }
