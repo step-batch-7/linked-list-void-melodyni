@@ -178,3 +178,30 @@ void destroy_list(List_ptr list){
   clear_list(list);
   free(list);
 }
+
+Status compare(List_ptr list_a, List_ptr list_b, Equator equator){
+  if(list_a->length != list_b->length){
+    return Failure;
+  }
+  Node_ptr p_walk_a = list_a->first;
+  Node_ptr p_walk_b = list_b->first;
+  while(p_walk_a != NULL){
+    if(!equator(p_walk_a->element, p_walk_b->element)){
+      return Failure;
+    }
+    p_walk_a = p_walk_a->next;
+    p_walk_b = p_walk_b->next;
+  }
+  return Success;
+}
+
+List_ptr map(List_ptr list, Mapper mapper){
+  Node_ptr p_walk = list->first;
+  List_ptr mapped_array = create_list();
+  while(p_walk != NULL){
+    Element mapped_val = (*mapper)(p_walk->element);
+    add_to_list(mapped_array, mapped_val);
+    p_walk = p_walk->next;
+  }
+  return mapped_array;
+}

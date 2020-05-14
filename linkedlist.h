@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
 The consumer of this Linked List library is expected to take care of allocating & freeing elements.
@@ -45,6 +46,7 @@ typedef Status (*Predicate)(Element);
 typedef Element (*Reducer)(Element, Element);
 typedef void (*ElementProcessor)(Element);
 typedef Status (*Matcher)(Element, Element);
+typedef Status(*Equator)(Element, Element);
 
 List_ptr create_list(void);
 
@@ -55,6 +57,7 @@ Status insert_at(List_ptr, Element element, int position);
 List_ptr reverse(List_ptr);
 Prev_Current_Pair *get_prev_curr_pair(List_ptr, int);
 int search(List_ptr , Element element, Matcher matcher);
+Status compare(List_ptr list_a, List_ptr list_b, Equator equator);
 
 
 List_ptr map(List_ptr, Mapper);

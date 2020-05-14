@@ -303,7 +303,6 @@ void test_remove_first_occurrence(){
   destroy_list(list4);
 }
 
-
 void test_remove_all_occurrences(){
   printf("\nremove_all_occurrences\n");
   char message[] = "should remove all occurrences of given value ";
@@ -341,7 +340,6 @@ void test_remove_all_occurrences(){
   List_ptr list4 = create_list();
   int num7 = 2;
   int num8 = 2;
-  add_to_list(list4,&num7);
   List_ptr result_list4 = remove_all_occurrences(list4, &num8, &match_int);
   Status is_passed4 = list4->length == 0 && search(result_list4, &num8, &match_int) == -1;
   print_result(is_passed4, message4);
@@ -362,6 +360,54 @@ void test_clear_list(){
   destroy_list(list);
 }
 
+Element increment(Element value){
+  Element num = malloc(sizeof(Element));
+  int number = (*(int *)value) + 1;
+  memcpy(num, &number, sizeof(int));
+  return num;
+}
+
+Status are_int_equal(Element data_a, Element data_b){
+  int a = *(int *)data_a;
+  int b = *(int *)data_b;
+  return a == b;
+}
+
+void test_map(){
+  printf("\nmap\n");
+  List_ptr list = create_list();
+  int num = 2;
+  int num2 = 3;
+  int num3 = 4;
+  add_to_list(list,&num);
+  add_to_list(list,&num2);
+  add_to_list(list,&num3);
+
+  List_ptr expected = create_list();
+  int num4 = 3;
+  int num5 = 4;
+  int num6 = 5;
+  add_to_list(expected,&num4); 
+  add_to_list(expected,&num5);
+  add_to_list(expected,&num6);
+
+  List_ptr actual = map(list,&increment);
+  char message[] = "should increment each element in the given list by one";
+  print_result(compare(actual,expected,&are_int_equal),message);
+  destroy_list(list);
+  destroy_list(actual);
+  destroy_list(expected);
+
+  List_ptr list2 = create_list();
+  List_ptr expected2 = create_list();
+  List_ptr actual2 = map(list2, &increment);
+  char message2[] = "should map empty array";
+  print_result(compare(actual2,expected2,&are_int_equal),message2);
+  destroy_list(list2);
+  destroy_list(actual2);
+  destroy_list(expected2);
+}
+
 int main(){
   test_create_list();
   test_add_to_list();
@@ -374,5 +420,6 @@ int main(){
   test_remove_first_occurrence();
   test_remove_all_occurrences();
   test_clear_list();
+  test_map();
   return 0;
 }
